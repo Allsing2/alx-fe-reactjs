@@ -8,6 +8,7 @@ import Home from './Components/Home';
 import About from './Components/About';
 import Services from './Components/Services';
 import Contact from './Components/Contact';
+import Navbar from './Components/Navbar'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -35,6 +36,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="Components/" element={<Home />} />
           <Route path="Components/about" element={<About />} />
