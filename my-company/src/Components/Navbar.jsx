@@ -6,12 +6,14 @@ function Navbar() {
       backgroundColor: '#333',
       padding: '10px',
       display: 'flex',
-      gap: '20px'
+      gap: '20px',
+      position: 'relative',
+      top: '30px'
     }}>
-      <Link to="/" style={{ color: '#fff' }}>Home</Link>
-      <Link to="/about" style={{ color: '#fff' }}>About</Link>
-      <Link to="/services" style={{ color: '#fff' }}>Services</Link>
-      <Link to="/contact" style={{ color: '#fff' }}>Contact</Link>
+      <Link to="./" style={{ color: '#fff' }}>Home</Link>
+      <Link to="./about" style={{ color: '#fff' }}>About</Link>
+      <Link to="./services" style={{ color: '#fff' }}>Services</Link>
+      <Link to="./contact" style={{ color: '#fff' }}>Contact</Link>
     </nav>
   );
 }
