@@ -5,9 +5,10 @@ function Navbar() {
     <nav style={{
         position: 'absolute',
         top: '20px',
-        right: '30px',
+        left: '30px',
         backgroundColor: 'blue',
         padding: '20px',
+        margin: 'auto',
         display: 'flex',
         gap: '20px',
         justifyContent: 'flex-end',

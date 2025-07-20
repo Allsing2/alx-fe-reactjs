@@ -1,28 +1,47 @@
-// import { useState } from 'react';
-// import reactLogo from './assets/react.svg';
-// import viteLogo from '/vite.svg';
-// import './App.css';
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
 import About from './Components/About';
 import Services from './Components/Services';
 import Contact from './Components/Contact';
-import Navbar from './Components/Navbar'
+import Navbar from './Components/Navbar';
 
 function App() {
-  return (
-    <>
-      <BrowserRouter>
-        <Navbar />
+   return (
+<>
+  <BrowserRouter>
+    <Navbar />
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        background: 'linear-gradient(to right, #e0eafc, #cfdef3)',
+        padding: '60px 20px 20px', // space for Navbar
+        fontFamily: 'Segoe UI, sans-serif',
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: '#fff',
+          padding: '40px',
+          borderRadius: '12px',
+          boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
+          width: 'min(90%, 100%)',
+          textAlign: 'center',
+        }}
+      >
         <Routes>
-          <Route path="Components/" element={<Home />} />
-          <Route path="Components/about" element={<About />} />
-          <Route path="Components/services" element={<Services />} />
-          <Route path="Components/contact" element={<Contact />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
-      </BrowserRouter>
-    </>
+      </div>
+    </div>
+  </BrowserRouter>
+</>
+
   )
 }
 

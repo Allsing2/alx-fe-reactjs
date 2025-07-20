@@ -1,7 +1,6 @@
-   import Navbar from "./Navbar";
    function Services() {
      return (
-       <div style={{ padding: '20px' }}>
+       <div style={{ padding: '20px', color: 'blueviolet' }}>
          <h1>Our Services</h1>
          <ul>
            <li>Technology Consulting</li>
