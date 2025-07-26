@@ -1,8 +1,8 @@
-import './App.css'
-import AddRecipeForm from './components/AddRecipeForm'
-import RecipeList from './components/RecipeList'
-import { useRecipeStore } from './src/recipeStore'
-import { Outlet } from 'react-router-dom'
+import './App.css';
+import AddRecipeForm from './components/AddRecipeForm';
+import RecipeList from './components/RecipeList';
+import { useRecipeStore } from './store/recipeStore';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
