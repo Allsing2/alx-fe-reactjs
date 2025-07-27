@@ -5,12 +5,8 @@ import useRecipeStore from './recipeStore';
 import HomePage from './pages/HomePage';
 import FavoritesPage from './pages/FavoritesPage';
 import RecommendationsPage from './pages/RecommendationsPage';
-import recipelist from './components/RecipeList';
-import addrecipeform from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
-import useRecipeStore from './components/recipeStore';
 import NavBar from './components/NavBar';
-import RecipeDetails from './components/RecipeDetails ';
 
 function App() {
   const setRecipes = useRecipeStore(state => state.setRecipes);
