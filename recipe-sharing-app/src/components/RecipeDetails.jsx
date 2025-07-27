@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRecipeStore } from '../recipeStore';
-import EditRecipeForm from './EditRecipeForm'; // Import the EditRecipeForm
+import EditRecipeForm from './EditRecipeForm';
 
 const RecipeDetails = () => {
   const { recipeId } = useParams(); // Get recipeId from URL parameters
@@ -15,7 +15,8 @@ const RecipeDetails = () => {
 
   // Handle recipe deletion
   const handleDelete = () => {
-    if (window.confirm('Are you sure you want to delete this recipe?')) { // Using window.confirm, consider a custom modal
+    // Using window.confirm, consider a custom modal for better UX as per best practices
+    if (window.confirm('Are you sure you want to delete this recipe? This action cannot be undone.')) {
       deleteRecipe(parseInt(recipeId));
       navigate('/'); // Navigate back to the home page after deletion
     }
@@ -39,7 +40,9 @@ const RecipeDetails = () => {
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto my-8">
       <h1 className="text-4xl font-extrabold text-gray-900 mb-4">{recipe.title}</h1>
-      <p className="text-gray-700 text-lg leading-relaxed mb-6">{recipe.description}</p>
+      <p className="text-gray-700 text-lg leading-relaxed mb-2">{recipe.description}</p>
+      {/* Displaying recipe.id for reference, can be removed in production */}
+      <p className="text-gray-500 text-sm mb-6">Recipe ID: {recipe.id}</p>
 
       <div className="flex space-x-4 mb-8">
         <button
