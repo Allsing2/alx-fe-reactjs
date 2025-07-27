@@ -2,6 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
+import SearchBar from './components/SearchBar';
+import FavoritesList from './components/FavoritesList'; // Import FavoritesList
+import RecommendationsList from './components/RecommendationsList'; // Import RecommendationsList
+
 import './App.css';
 import './index.css'; // Tailwind CSS directives
 
@@ -16,10 +20,15 @@ function App() {
 
         <main className="container mx-auto">
           <Routes>
-            {/* Home page route: displays add form and recipe list */}
+            {/* Home page route: displays search bar, add form, and recipe list */}
             <Route path="/" element={
               <>
+                <SearchBar />
                 <AddRecipeForm />
+                <hr className="my-10 border-gray-300" />
+                <FavoritesList /> {/* Integrated FavoritesList */}
+                <hr className="my-10 border-gray-300" />
+                <RecommendationsList /> {/* Integrated RecommendationsList */}
                 <hr className="my-10 border-gray-300" />
                 <RecipeList />
               </>
