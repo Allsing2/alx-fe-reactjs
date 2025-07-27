@@ -13,6 +13,22 @@ const useRecipeStore = create((set) => ({
       recipes: [...state.recipes, { ...newRecipe, id: Date.now() }]
     })),
   
+  // New action: Delete a recipe by its ID
+  deleteRecipe: (recipeId) =>
+    set((state) => ({
+      recipes: state.recipes.filter((recipe) => recipe.id !== recipeId),
+      // Also remove from favorites if it was a favorite
+      favorites: state.favorites.filter((id) => id !== recipeId)
+    })),
+
+  // New action: Update an existing recipe
+  updateRecipe: (updatedRecipe) =>
+    set((state) => ({
+      recipes: state.recipes.map((recipe) =>
+        recipe.id === updatedRecipe.id ? { ...recipe, ...updatedRecipe } : recipe
+      )
+    })),
+
   // Favorites actions
   addFavorite: (recipeId) => 
     set((state) => {
@@ -57,3 +73,5 @@ const useRecipeStore = create((set) => ({
 }));
 
 export default useRecipeStore;
+// This store manages recipes, favorites, and recommendations using Zustand.
+// It includes actions to set, add, delete, and update recipes, manage favorites,
