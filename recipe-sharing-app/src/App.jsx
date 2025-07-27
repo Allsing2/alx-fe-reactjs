@@ -7,8 +7,6 @@ import FavoritesPage from './pages/FavoritesPage';
 import RecommendationsPage from './pages/RecommendationsPage';
 import RecipeDetails from './components/RecipeDetails';
 import NavBar from './components/NavBar';
-import AddRecipeForm from './components/AddRecipeForm';
-import RecipeList from './components/RecipeList';
 
 function App() {
   const setRecipes = useRecipeStore(state => state.setRecipes);
