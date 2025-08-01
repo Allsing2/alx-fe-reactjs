@@ -1,5 +1,7 @@
+// src/components/Search.jsx
 
 import React, { useState } from 'react';
+// The component now imports the `searchUsers` function, not `fetchUserData`.
 import { searchUsers } from '../services/githubService.js';
 
 function Search() {
