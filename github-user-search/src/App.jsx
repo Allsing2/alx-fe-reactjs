@@ -1,4 +1,3 @@
-// src/App.jsx
 
 // 1. Import necessary components and hooks
 // We import 'React' to use JSX syntax.
