@@ -5,7 +5,7 @@
 // We import the 'UserSearch' component, which contains all our search logic and UI.
 // This is an example of composition, where the App component is composed of other smaller components.
 import React from 'react';
-import UserSearch from './components/UserSearch.jsx';
+import Search from './components/Search.jsx';
 
 // 2. Define the main App component
 // This is the top-level component of our application.

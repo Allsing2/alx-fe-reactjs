@@ -1,4 +1,4 @@
-// src/components/UserSearch.jsx
+// src/components/Search.jsx
 
 // 1. Import necessary React hooks and components
 // We use useState for managing component state (search term, user data, etc.).
@@ -10,8 +10,8 @@ import React, { useState } from 'react';
 // This function will handle the actual API call to GitHub.
 import { fetchUserData } from '../services/githubService.js';
 
-// 3. Define the UserSearch component
-function UserSearch() {
+// 3. Define the Search component
+function Search() {
   // 4. Set up state variables using the useState hook
   // `username`: stores the value from the search input field.
   // `userData`: stores the user data fetched from the API.
@@ -116,4 +116,4 @@ function UserSearch() {
 }
 
 // 8. Export the component for use in other files
-export default UserSearch;
+export default Search;
