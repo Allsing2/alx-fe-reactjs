@@ -1,108 +1,119 @@
 // src/components/UserSearch.jsx
 
-// 1. Import necessary hooks and components
-// 'useState' is a React Hook that lets you add state to functional components.
-// It allows us to track changing data in our component.
+// 1. Import necessary React hooks and components
+// We use useState for managing component state (search term, user data, etc.).
+// We use useEffect for handling side effects, but it's not strictly needed here
+// since the fetch is triggered by a form submit.
 import React, { useState } from 'react';
 
 // 2. Import the API service function
-// We import the function that we created earlier.
-// This function handles all the logic for making the API call to GitHub.
-// Our component doesn't need to know the API URL or the secret key.
-import { searchGithubUser } from '../services/githubApi';
+// This function will handle the actual API call to GitHub.
+import { fetchUserData } from '../services/githubService.js';
 
-// 3. Define the main functional component
-// This is a standard functional component in React.
+// 3. Define the UserSearch component
 function UserSearch() {
-  // 4. State Management with useState
-  // We use useState to declare state variables.
-  // The first item in the array is the state variable itself.
-  // The second item is the function to update that state.
-
-  // 'username' will store the text from our input field.
+  // 4. Set up state variables using the useState hook
+  // `username`: stores the value from the search input field.
+  // `userData`: stores the user data fetched from the API.
+  // `isLoading`: a boolean to track the loading state for conditional rendering.
+  // `error`: stores an error message if the API call fails.
   const [username, setUsername] = useState('');
-  
-  // 'userData' will store the data we get back from the GitHub API.
-  // It's initialized as 'null' because we haven't fetched any data yet.
   const [userData, setUserData] = useState(null);
-  
-  // 'isLoading' is a boolean flag to let us know when an API call is in progress.
-  // This is useful for showing a loading state to the user.
   const [isLoading, setIsLoading] = useState(false);
-  
-  // 'error' will store any error messages we receive from the API or network.
-  // It's initialized as 'null' because there are no errors initially.
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
-  // 5. Define the event handler for form submission
-  // This is an 'async' function because it will be making an asynchronous API call.
-  // The 'event' parameter is passed automatically by the browser when the form is submitted.
-  const handleSearch = async (event) => {
-    // Prevent the default browser behavior of a form submission, which is to reload the page.
+  // 5. Handle the form submission
+  const handleSubmit = async (event) => {
+    // Prevent the default form submission behavior (page reload)
     event.preventDefault();
 
-    // Reset all state variables before making a new API call
-    // This clears any previous user data, error messages, or loading states.
-    setIsLoading(true);
-    setError(null);
+    // Reset previous states before a new search
     setUserData(null);
+    setError('');
 
+    // Only proceed with the API call if the username is not empty
+    if (!username.trim()) {
+      setError('Please enter a GitHub username.');
+      return;
+    }
+
+    // Set loading state to true and fetch data
+    setIsLoading(true);
     try {
-      // 6. Call the API service function and handle the result
-      // The 'await' keyword pauses the function execution until the 'searchGithubUser'
-      // function returns with a successful result.
-      const data = await searchGithubUser(username);
-      
-      // Update the 'userData' state with the fetched data
+      // Call the service function to fetch user data
+      const data = await fetchUserData(username);
+      // If data is successfully returned, update the userData state
       setUserData(data);
     } catch (err) {
-      // 7. Error Handling
-      // If the 'searchGithubUser' function throws an error (e.g., API returns 404),
-      // the code jumps to this 'catch' block.
+      // If an error occurs, set the error state
       setError(err.message);
     } finally {
-      // 8. The 'finally' block
-      // The code in this block always runs, regardless of whether the try block
-      // succeeded or failed. This is the perfect place to set 'isLoading' back to false.
+      // Always set loading to false after the request is complete
       setIsLoading(false);
     }
   };
 
-  // 9. The Component's JSX (UI Rendering)
-  // The return statement contains the UI that will be rendered by this component.
+  // 6. Handle the input change
+  const handleInputChange = (event) => {
+    // Update the username state as the user types
+    setUsername(event.target.value);
+  };
+
+  // 7. Render the component's UI
   return (
     <div>
-      {/* The form element triggers the 'handleSearch' function on submission */}
-      <form onSubmit={handleSearch}>
+      {/* Search Form */}
+      {/* We use flexbox and rounded corners for a clean, modern look */}
+      <form onSubmit={handleSubmit} className="mb-6 flex space-x-2">
         <input
           type="text"
-          value={username} // The input value is controlled by our 'username' state
-          onChange={(e) => setUsername(e.target.value)} // Update state on every keystroke
+          value={username}
+          onChange={handleInputChange}
           placeholder="Enter GitHub username"
+          className="flex-1 p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <button type="submit" disabled={isLoading}>
-          {/* Use conditional text for the button */}
-          {isLoading ? 'Searching...' : 'Search'}
+        <button
+          type="submit"
+          className="p-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-300"
+        >
+          Search
         </button>
       </form>
 
-      {/* 10. Conditional Rendering */}
-      {/* These lines render different parts of the UI based on the component's state. */}
-      
-      {/* If 'error' is not null, display the error message */}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      
-      {/* If 'userData' is not null, display the user's information */}
-      {userData && (
-        <div>
-          <h2>{userData.name}</h2>
-          <p>Public Repos: {userData.public_repos}</p>
-          <img src={userData.avatar_url} alt={`${userData.name}'s avatar`} width="100" />
-        </div>
-      )}
+      {/* Conditional Rendering of Results */}
+      <div className="text-center">
+        {/* If isLoading is true, show a loading message */}
+        {isLoading && <p>Loading...</p>}
+
+        {/* If there's an error, show the error message */}
+        {error && <p className="text-red-400">{error}</p>}
+
+        {/* If userData exists (and is not null), display the user's info */}
+        {userData && (
+          <div className="bg-gray-700 p-6 rounded-xl shadow-md flex flex-col items-center space-y-4">
+            {/* User Avatar */}
+            <img 
+              src={userData.avatar_url}
+              alt={userData.login}
+              className="w-24 h-24 rounded-full border-4 border-indigo-500"
+            />
+            {/* User Name and Login */}
+            <h2 className="text-2xl font-semibold">{userData.name || userData.login}</h2>
+            {/* Link to GitHub Profile */}
+            <a
+              href={userData.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-indigo-400 hover:text-indigo-300 transition duration-300"
+            >
+              View GitHub Profile
+            </a>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
-// 11. Export the component for use in other files
+// 8. Export the component for use in other files
 export default UserSearch;
