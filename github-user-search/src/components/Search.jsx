@@ -2,8 +2,6 @@
 
 // 1. Import necessary React hooks and components
 // We use useState for managing component state (search term, user data, etc.).
-// We use useEffect for handling side effects, but it's not strictly needed here
-// since the fetch is triggered by a form submit.
 import React, { useState } from 'react';
 
 // 2. Import the API service function
@@ -45,8 +43,14 @@ function Search() {
       // If data is successfully returned, update the userData state
       setUserData(data);
     } catch (err) {
-      // If an error occurs, set the error state
-      setError(err.message);
+      // If the error message from the service indicates a user was not found,
+      // we'll display a specific, hardcoded message. Otherwise, we'll display the
+      // general error message from the service.
+      if (err.message.includes("can't find the user")) {
+        setError("Looks like we can't find the user.");
+      } else {
+        setError(err.message);
+      }
     } finally {
       // Always set loading to false after the request is complete
       setIsLoading(false);
