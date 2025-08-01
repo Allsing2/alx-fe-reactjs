@@ -1,4 +1,3 @@
-import index from 'index.js';
 import React from 'react';
 import Search from './components/Search.jsx';
 import packageJson from '../package.json';
