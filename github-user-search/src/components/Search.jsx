@@ -1,101 +1,80 @@
 // src/components/Search.jsx
 
+// 1. Import necessary React hooks and components
+// We use useState for managing component state (search term, user data, etc.).
+// We use useEffect for handling side effects, but it's not strictly needed here
+// since the fetch is triggered by a form submit.
 import React, { useState } from 'react';
-import { searchUsers } from '../services/githubService.js';
 
+// 2. Import the API service function
+// This function will handle the actual API call to GitHub.
+import { fetchUserData } from '../services/githubService.js';
+
+// 3. Define the Search component
 function Search() {
-  // State for all search parameters
+  // 4. Set up state variables using the useState hook
+  // `username`: stores the value from the search input field.
+  // `userData`: stores the user data fetched from the API.
+  // `isLoading`: a boolean to track the loading state for conditional rendering.
+  // `error`: stores an error message if the API call fails.
   const [username, setUsername] = useState('');
-  const [location, setLocation] = useState('');
-  const [minRepos, setMinRepos] = useState('');
-
-  // State for search results and loading status
-  const [users, setUsers] = useState([]);
+  const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // State for pagination
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(false);
-
-  // Helper function to build a clean search query object
-  const buildQuery = (currentPage) => ({
-    username,
-    location,
-    minRepos,
-    page: currentPage,
-  });
-
-  // Handle the initial search form submission
-  const handleSearch = async (event) => {
+  // 5. Handle the form submission
+  const handleSubmit = async (event) => {
+    // Prevent the default form submission behavior (page reload)
     event.preventDefault();
-    setUsers([]); // Clear previous results for a new search
-    setPage(1); // Reset page to 1 for a new search
+
+    // Reset previous states before a new search
+    setUserData(null);
     setError('');
 
-    // Ensure at least one search field is filled
-    if (!username.trim() && !location.trim() && !minRepos.trim()) {
-      setError('Please enter at least one search criteria.');
+    // Only proceed with the API call if the username is not empty
+    if (!username.trim()) {
+      setError('Please enter a GitHub username.');
       return;
     }
 
+    // Set loading state to true and fetch data
     setIsLoading(true);
     try {
-      const response = await searchUsers(buildQuery(1));
-      setUsers(response.items);
-      setHasMore(response.total_count > response.items.length); // Check if there are more results
+      // Call the service function to fetch user data
+      const data = await fetchUserData(username);
+      // If data is successfully returned, update the userData state
+      setUserData(data);
     } catch (err) {
+      // If an error occurs, set the error state
       setError(err.message);
     } finally {
+      // Always set loading to false after the request is complete
       setIsLoading(false);
     }
   };
 
-  // Handle loading more results for pagination
-  const handleLoadMore = async () => {
-    setIsLoading(true);
-    const nextPage = page + 1;
-    try {
-      const response = await searchUsers(buildQuery(nextPage));
-      setUsers([...users, ...response.items]); // Append new results to existing list
-      setPage(nextPage); // Increment the page number
-      // Check if there are more results to load based on total and current count
-      setHasMore(response.total_count > users.length + response.items.length);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
+  // 6. Handle the input change
+  const handleInputChange = (event) => {
+    // Update the username state as the user types
+    setUsername(event.target.value);
   };
 
+  // 7. Render the component's UI
   return (
     <div>
-      {/* Advanced Search Form */}
-      <form onSubmit={handleSearch} className="mb-6 space-y-4">
+      {/* Search Form */}
+      {/* We use flexbox and rounded corners for a clean, modern look */}
+      <form onSubmit={handleSubmit} className="mb-6 flex space-x-2">
         <input
           type="text"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="GitHub Username"
-          className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-        <input
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="Location (e.g., San Francisco)"
-          className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-        <input
-          type="number"
-          value={minRepos}
-          onChange={(e) => setMinRepos(e.target.value)}
-          placeholder="Minimum Repositories"
-          className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          onChange={handleInputChange}
+          placeholder="Enter GitHub username"
+          className="flex-1 p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <button
           type="submit"
-          className="w-full p-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300"
+          className="p-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-300"
         >
           Search
         </button>
@@ -103,52 +82,38 @@ function Search() {
 
       {/* Conditional Rendering of Results */}
       <div className="text-center">
+        {/* If isLoading is true, show a loading message */}
         {isLoading && <p>Loading...</p>}
-        {error && <p className="text-red-400">{error}</p>}
-        
-        {/* Display the list of users */}
-        {users.length > 0 && (
-          <div className="space-y-4">
-            {users.map((user) => (
-              <div 
-                key={user.id}
-                className="bg-gray-700 p-6 rounded-xl shadow-md flex items-center space-x-4"
-              >
-                <img 
-                  src={user.avatar_url}
-                  alt={user.login}
-                  className="w-16 h-16 rounded-full border-2 border-indigo-500"
-                />
-                <div className="text-left">
-                  <h3 className="text-xl font-semibold">{user.login}</h3>
-                  <p className="text-sm text-gray-400">
-                    <a
-                      href={user.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-indigo-400 hover:text-indigo-300"
-                    >
-                      View Profile
-                    </a>
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
 
-        {/* Load More button for pagination */}
-        {hasMore && !isLoading && (
-          <button
-            onClick={handleLoadMore}
-            className="mt-6 p-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition duration-300"
-          >
-            Load More
-          </button>
+        {/* If there's an error, show the error message */}
+        {error && <p className="text-red-400">{error}</p>}
+
+        {/* If userData exists (and is not null), display the user's info */}
+        {userData && (
+          <div className="bg-gray-700 p-6 rounded-xl shadow-md flex flex-col items-center space-y-4">
+            {/* User Avatar */}
+            <img 
+              src={userData.avatar_url}
+              alt={userData.login}
+              className="w-24 h-24 rounded-full border-4 border-indigo-500"
+            />
+            {/* User Name and Login */}
+            <h2 className="text-2xl font-semibold">{userData.name || userData.login}</h2>
+            {/* Link to GitHub Profile */}
+            <a
+              href={userData.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-indigo-400 hover:text-indigo-300 transition duration-300"
+            >
+              View GitHub Profile
+            </a>
+          </div>
         )}
       </div>
     </div>
   );
 }
 
+// 8. Export the component for use in other files
 export default Search;
