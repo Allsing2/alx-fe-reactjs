@@ -1,10 +1,7 @@
-
-// 1. Import necessary components and hooks
-// We import 'React' to use JSX syntax.
-// We import the 'UserSearch' component, which contains all our search logic and UI.
-// This is an example of composition, where the App component is composed of other smaller components.
+import index from 'index.js';
 import React from 'react';
 import Search from './components/Search.jsx';
+import packageJson from '../package.json';
 
 // 2. Define the main App component
 // This is the top-level component of our application.
