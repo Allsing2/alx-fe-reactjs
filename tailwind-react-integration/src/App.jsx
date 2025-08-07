@@ -5,9 +5,9 @@ import './App.css'
 
 function App() {
   return (
-    <>
+    <div className='sm:p-4 md:p-8 sm:max-w-xm md:max-w-sm'>
       <UserProfile />
-    </>
+    </div>
   )
 }
 
