@@ -1,10 +1,27 @@
 import React, { useState } from 'react';
 
+// This is our new, separate validate function.
+const validate = (formData) => {
+  const errors = {};
+  if (!formData.title.trim()) {
+    errors.title = "Recipe Title is required.";
+  }
+  if (!formData.summary.trim()) {
+    errors.summary = "Summary is required.";
+  }
+  if (!formData.ingredients.trim()) {
+    errors.ingredients = "Ingredients are required.";
+  }
+  if (!formData.steps.trim()) {
+    errors.steps = "Steps are required.";
+  }
+  return errors;
+};
+
 function AddRecipeForm() {
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [ingredients, setIngredients] = useState('');
-  // We've changed this from 'instructions' to 'steps'
   const [steps, setSteps] = useState('');
 
   const [errors, setErrors] = useState({});
@@ -12,21 +29,16 @@ function AddRecipeForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const validationErrors = {};
-    if (!title.trim()) {
-      validationErrors.title = "Recipe Title is required.";
-    }
-    if (!summary.trim()) {
-      validationErrors.summary = "Summary is required.";
-    }
-    if (!ingredients.trim()) {
-      validationErrors.ingredients = "Ingredients are required.";
-    }
-    // We've changed this from 'instructions' to 'steps'
-    if (!steps.trim()) {
-      validationErrors.steps = "Steps are required.";
-    }
+    const formData = {
+      title,
+      summary,
+      ingredients,
+      steps,
+    };
 
+    // We now call our external validate function to check the form data.
+    const validationErrors = validate(formData);
+    
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -37,7 +49,6 @@ function AddRecipeForm() {
       title,
       summary,
       ingredients: ingredients.split(',').map(item => item.trim()),
-      // We've changed this from 'instructions' to 'steps'
       steps,
     };
     
@@ -46,7 +57,7 @@ function AddRecipeForm() {
     setTitle('');
     setSummary('');
     setIngredients('');
-    setSteps(''); // We've changed this from 'instructions' to 'steps'
+    setSteps('');
   };
 
   return (
