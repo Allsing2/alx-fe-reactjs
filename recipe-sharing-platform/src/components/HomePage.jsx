@@ -29,7 +29,7 @@ return (
   <div className="container mx-auto px-4 py-8">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {recipes.map(recipe => (
-        <div key={recipe.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div key={recipe.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all">
           {/* <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" />           */}
           <img src={imageMap[recipe.image]} alt={recipe.title} className="w-full h-48 object-cover" />
           <div className="p-6">
