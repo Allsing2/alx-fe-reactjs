@@ -3,30 +3,85 @@
     "id": 1,
     "title": "Spaghetti Carbonara",
     "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-    "image": "spaghetti.jpg"
+    "image": "spaghetti.jpg",
+    "ingredients": [
+      "200g spaghetti",
+      "100g guanciale (or pancetta/bacon)",
+      "2 large eggs",
+      "50g Pecorino Romano cheese, grated",
+      "Black pepper, freshly ground",
+      "Salt for pasta water"
+    ],
+    "instructions": "Boil spaghetti until al dente. While pasta cooks, pan-fry guanciale until crispy. Whisk eggs, Pecorino, and pepper in a bowl. Drain pasta, reserving some pasta water. Combine hot pasta with guanciale, then quickly stir in egg mixture, adding reserved pasta water to create a creamy sauce. Serve immediately, topped with more Pecorino and black pepper."
   },
   {
     "id": 2,
     "title": "Chicken Tikka Masala",
     "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-    "image": "chicken.jpg"
+    "image": "chicken.jpg",
+    "ingredients": [
+      "500g boneless chicken breast, cubed",
+      "1 cup plain yogurt",
+      "2 tbsp ginger-garlic paste",
+      "1 tbsp garam masala",
+      "1 tsp turmeric powder",
+      "1 tsp cumin powder",
+      "1 tsp chili powder",
+      "1 can (400g) crushed tomatoes",
+      "1/2 cup heavy cream",
+      "2 tbsp butter",
+      "1 onion, chopped",
+      "Fresh cilantro for garnish"
+    ],
+    "instructions": "Marinate chicken in yogurt and spices for at least 30 minutes. Grill or pan-fry chicken until lightly charred. Sauté onion, then add ginger-garlic paste, remaining spices, and crushed tomatoes. Simmer for 10-15 minutes. Stir in cooked chicken and cream. Cook until heated through. Garnish with fresh cilantro and serve with rice or naan."
   },
   {
     "id": 3,
     "title": "Tasty Avocado",
     "summary": "Creamy avocado slices served fresh or mashed, perfect as a topping, spread, or side dish.",
-    "image": "tasty.jpg"
+    "image": "tasty.jpg",
+    "ingredients": [
+      "2 ripe avocados",
+      "1/2 small red onion, finely diced",
+      "1/4 cup fresh cilantro, chopped",
+      "1 lime, juiced",
+      "Salt to taste",
+      "Black pepper to taste"
+    ],
+    "instructions": "Cut avocados in half, remove pit, and scoop out flesh. Mash or slice as desired. In a bowl, combine avocado with red onion, cilantro, and lime juice. Season with salt and pepper. Serve immediately as a side, topping, or spread."
   },
   {
     "id": 4,
     "title": "Creamy Fruit Salad Delight",
     "summary": "A refreshing blend of assorted fruits tossed in a smooth, sweet cream dressing.",
-    "image": "creamy.jpg"
+    "image": "creamy.jpg",
+    "ingredients": [
+      "1 cup strawberries, halved",
+      "1 cup blueberries",
+      "1 cup green grapes",
+      "1 cup pineapple chunks",
+      "1 banana, sliced",
+      "1/2 cup heavy cream",
+      "2 tbsp powdered sugar",
+      "1 tsp vanilla extract"
+    ],
+    "instructions": "In a large bowl, combine all chopped fruits. In a separate bowl, whip heavy cream with powdered sugar and vanilla extract until soft peaks form. Gently fold the whipped cream into the fruit mixture until all fruits are coated. Chill for 30 minutes before serving for best results."
   },
   {
     "id": 5,
     "title": "MP",
     "summary": "A healthy Keto-oriented dish featured by user MP, showing a bowl with chicken, corn, tomatoes, and broccoli—ideal for nutritious meal inspiration.",
-    "image": "mp.jpg"
+    "image": "mp.jpg",
+    "ingredients": [
+      "200g grilled chicken breast, sliced",
+      "1/2 cup corn kernels",
+      "1/2 cup cherry tomatoes, halved",
+      "1 cup steamed broccoli florets",
+      "1 tbsp olive oil",
+      "Salt to taste",
+      "Black pepper to taste",
+      "Optional: a squeeze of lemon juice"
+    ],
+    "instructions": "In a bowl, combine grilled chicken, corn, cherry tomatoes, and steamed broccoli. Drizzle with olive oil, and season with salt and black pepper. Toss gently to combine. Serve warm or cold. Add a squeeze of lemon juice for extra flavor if desired."
   }
 ]
