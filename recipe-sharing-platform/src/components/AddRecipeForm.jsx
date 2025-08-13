@@ -4,7 +4,8 @@ function AddRecipeForm() {
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
+  // We've changed this from 'instructions' to 'steps'
+  const [steps, setSteps] = useState('');
 
   const [errors, setErrors] = useState({});
 
@@ -21,8 +22,9 @@ function AddRecipeForm() {
     if (!ingredients.trim()) {
       validationErrors.ingredients = "Ingredients are required.";
     }
-    if (!instructions.trim()) {
-      validationErrors.instructions = "Instructions are required.";
+    // We've changed this from 'instructions' to 'steps'
+    if (!steps.trim()) {
+      validationErrors.steps = "Steps are required.";
     }
 
     if (Object.keys(validationErrors).length > 0) {
@@ -35,7 +37,8 @@ function AddRecipeForm() {
       title,
       summary,
       ingredients: ingredients.split(',').map(item => item.trim()),
-      instructions,
+      // We've changed this from 'instructions' to 'steps'
+      steps,
     };
     
     console.log(newRecipe);
@@ -43,7 +46,7 @@ function AddRecipeForm() {
     setTitle('');
     setSummary('');
     setIngredients('');
-    setInstructions('');
+    setSteps(''); // We've changed this from 'instructions' to 'steps'
   };
 
   return (
@@ -52,7 +55,6 @@ function AddRecipeForm() {
         Add a New Recipe
       </h1>
       
-      {/* The form is styled with a max-width, padding, shadow, and rounded corners */}
       <form onSubmit={handleSubmit} className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-lg">
         
         {/* Title Input */}
@@ -99,18 +101,18 @@ function AddRecipeForm() {
           {errors.ingredients && <p className="text-red-500 text-sm mt-1">{errors.ingredients}</p>}
         </div>
         
-        {/* Instructions Textarea */}
+        {/* Steps Textarea */}
         <div className="mb-6">
-          <label htmlFor="instructions" className="block text-gray-700 font-bold mb-2">Instructions</label>
+          <label htmlFor="steps" className="block text-gray-700 font-bold mb-2">Steps</label>
           <textarea
-            id="instructions"
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
+            id="steps"
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows="6"
             required
           />
-          {errors.instructions && <p className="text-red-500 text-sm mt-1">{errors.instructions}</p>}
+          {errors.steps && <p className="text-red-500 text-sm mt-1">{errors.steps}</p>}
         </div>
         
         {/* Submit Button */}
