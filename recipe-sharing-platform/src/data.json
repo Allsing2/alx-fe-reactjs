@@ -3,30 +3,30 @@
     "id": 1,
     "title": "Spaghetti Carbonara",
     "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-    "image": "spaghetti.jpg"
+    "image": "./assets/spaghetti.jpg"
   },
   {
     "id": 2,
     "title": "Chicken Tikka Masala",
     "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-    "image": "chicken.jpg"
+    "image": "./assets/chicken.jpg"
   },
   {
     "id": 3,
     "title": "Tasty Avocado",
     "summary": "Creamy avocado slices served fresh or mashed, perfect as a topping, spread, or side dish.",
-    "image": "tasty.jpg"
+    "image": "./assets/tasty.jpg"
   },
   {
     "id": 4,
     "title": "Creamy Fruit Salad Delight",
     "summary": "A refreshing blend of assorted fruits tossed in a smooth, sweet cream dressing.",
-    "image": "creamy.jpg"
+    "image": "./assets/creamy.jpg"
   },
   {
     "id": 5,
     "title": "MP",
     "summary": "A healthy Keto-oriented dish featured by user MP, showing a bowl with chicken, corn, tomatoes, and broccoli—ideal for nutritious meal inspiration.",
-    "image": "mp.jpg"
+    "image": "./assets/mp.jpg"
   }
 ]
