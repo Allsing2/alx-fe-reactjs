@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 // Import our new components
+import AddRecipeForm from './components/AddRecipeForm';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
 import RecipeDetail from './components/RecipeDetail';
@@ -20,6 +21,7 @@ function App() {
         
         {/* This route uses a dynamic parameter ":id" to show a specific recipe. */}
         <Route path="/recipe/:id" element={<RecipeDetail />} />
+        <Route path="/add-recipe" element={<AddRecipeForm />} />
       </Routes>
     </Router>
   );
