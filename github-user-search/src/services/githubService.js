@@ -1,5 +1,5 @@
 // src/services/githubService.js
-
+import.meta.env.VITE_APP_GITHUB_API_KEY
 import axios from 'axios';
 
 // 1. Define an asynchronous function to search for users
