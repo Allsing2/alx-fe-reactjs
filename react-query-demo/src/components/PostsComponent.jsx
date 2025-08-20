@@ -15,10 +15,12 @@ function PostsComponent() {
     isLoading,
     isError,
     refetch,
+    isFetching,
   } = useQuery("posts", fetchPosts, {
     staleTime: 5000, // data stays fresh for 5s
     cacheTime: 1000 * 60 * 5, // cache persists for 5min
     refetchOnWindowFocus: false, // avoid auto refetch on window focus
+    keepPreviousData: true, // ✅ prevents UI flicker while fetching new data
   });
 
   if (isLoading) return <p>Loading posts...</p>;
@@ -33,6 +35,7 @@ function PostsComponent() {
       >
         Refetch Posts
       </button>
+      {isFetching && <p className="text-sm text-gray-500">Updating data…</p>}
       <ul className="space-y-2">
         {posts.slice(0, 10).map((post) => (
           <li key={post.id} className="border p-3 rounded-md shadow-sm">
