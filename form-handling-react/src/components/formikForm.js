@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import mockRegisterApi from '../api/mockRegisterApi';
 
-const FormikRegistrationForm = () => {
+const FormikForm = () => {
   const [message, setMessage] = useState('');
   const [isSubmittingFormik, setIsSubmittingFormik] = useState(false);
 
@@ -105,4 +105,4 @@ const FormikRegistrationForm = () => {
   );
 };
 
-export default FormikRegistrationForm;
+export default FormikForm;
