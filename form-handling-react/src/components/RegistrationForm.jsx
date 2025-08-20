@@ -2,26 +2,19 @@
 import { useState } from "react";
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  // separate state variables instead of an object
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [errors, setErrors] = useState({});
 
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Validate before submit
+  // validation logic
   const validate = () => {
     let newErrors = {};
-    if (!formData.username) newErrors.username = "Username is required";
-    if (!formData.email) newErrors.email = "Email is required";
-    if (!formData.password) newErrors.password = "Password is required";
+    if (!username) newErrors.username = "Username is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
     return newErrors;
   };
 
@@ -33,9 +26,13 @@ const RegistrationForm = () => {
       return;
     }
 
-    console.log("Submitting data:", formData);
+    console.log("Submitting data:", { username, email, password });
     alert("User registered successfully (mock API call)");
-    setFormData({ username: "", email: "", password: "" });
+
+    // reset form
+    setUsername("");
+    setEmail("");
+    setPassword("");
     setErrors({});
   };
 
@@ -48,8 +45,8 @@ const RegistrationForm = () => {
         <input
           type="text"
           name="username"
-          value={formData.username}
-          onChange={handleChange}
+          value={username}   // ✅ required
+          onChange={(e) => setUsername(e.target.value)}
         />
         {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
       </div>
@@ -59,8 +56,8 @@ const RegistrationForm = () => {
         <input
           type="email"
           name="email"
-          value={formData.email}
-          onChange={handleChange}
+          value={email}   // ✅ required
+          onChange={(e) => setEmail(e.target.value)}
         />
         {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
       </div>
@@ -70,8 +67,8 @@ const RegistrationForm = () => {
         <input
           type="password"
           name="password"
-          value={formData.password}
-          onChange={handleChange}
+          value={password}   // ✅ required
+          onChange={(e) => setPassword(e.target.value)}
         />
         {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
       </div>
