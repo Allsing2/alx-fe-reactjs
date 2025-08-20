@@ -1,53 +1,75 @@
-import React from 'react';
-import { useFormik } from 'formik'; // Import useFormik hook
-import * as Yup from 'yup'; // Import Yup for schema validation
+import React, { useState } from 'react';
 
-// Main App component that renders the FormikForm
+// Main App component that renders the RegistrationForm
 export default function App() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <FormikForm />
+      <RegistrationForm />
     </div>
   );
 }
 
-// FormikForm component
-function FormikForm() {
-  // Define validation schema using Yup
-  const validationSchema = Yup.object({
-    username: Yup.string()
-      .required('Username is required'),
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required'),
-    password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required'),
-  });
+// RegistrationForm component
+function RegistrationForm() {
+  // State variables for each input field
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // State for error messages
+  const [error, setError] = useState('');
+  // State for success message
+  const [success, setSuccess] = useState('');
 
-  // Initialize Formik
-  const formik = useFormik({
-    initialValues: { // Initial values for form fields
-      username: '',
-      email: '',
-      password: '',
-    },
-    validationSchema: validationSchema, // Link validation schema
-    onSubmit: (values, { setSubmitting, resetForm }) => { // Handle form submission
-      // Simulate API call
-      setTimeout(() => {
-        console.log('Formik Registration Data:', values);
-        alert(JSON.stringify(values, null, 2)); // Use alert for demonstration
-        resetForm(); // Clear the form after submission
-        setSubmitting(false); // Set submitting to false
-      }, 400);
-    },
-  });
+  // Handle changes for the username input
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+    // Clear error/success messages on input change
+    setError('');
+    setSuccess('');
+  };
+
+  // Handle changes for the email input
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    // Clear error/success messages on input change
+    setError('');
+    setSuccess('');
+  };
+
+  // Handle changes for the password input
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    // Clear error/success messages on input change
+    setError('');
+    setSuccess('');
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // Basic validation: Check if any field is empty
+    if (!username || !email || !password) {
+      setError('All fields are required.');
+      setSuccess('');
+      return;
+    }
+
+    // If all validations pass, log the form data and show success
+    console.log('Registration Data:', { username, email, password });
+    setSuccess('Registration successful!');
+    setError('');
+
+    // Optionally, clear the form fields after successful submission
+    setUsername('');
+    setEmail('');
+    setPassword('');
+  };
 
   return (
     <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg border border-gray-200">
-      <h2 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Register with Formik</h2>
-      <form onSubmit={formik.handleSubmit} className="space-y-6">
+      <h2 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Register</h2>
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Username Input */}
         <div>
           <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
@@ -57,16 +79,12 @@ function FormikForm() {
             type="text"
             id="username"
             name="username"
-            // Formik handles value, onChange, and onBlur
-            {...formik.getFieldProps('username')}
+            value={username} // Controlled input: value is tied to state
+            onChange={handleUsernameChange} // Updates state on change
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
             placeholder="Enter your username"
             aria-required="true"
           />
-          {/* Display validation error for username */}
-          {formik.touched.username && formik.errors.username ? (
-            <div className="text-red-500 text-sm mt-1">{formik.errors.username}</div>
-          ) : null}
         </div>
 
         {/* Email Input */}
@@ -78,16 +96,12 @@ function FormikForm() {
             type="email"
             id="email"
             name="email"
-            // Formik handles value, onChange, and onBlur
-            {...formik.getFieldProps('email')}
+            value={email} // Controlled input: value is tied to state
+            onChange={handleEmailChange} // Updates state on change
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
             placeholder="Enter your email"
             aria-required="true"
           />
-          {/* Display validation error for email */}
-          {formik.touched.email && formik.errors.email ? (
-            <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
-          ) : null}
         </div>
 
         {/* Password Input */}
@@ -99,28 +113,39 @@ function FormikForm() {
             type="password"
             id="password"
             name="password"
-            // Formik handles value, onChange, and onBlur
-            {...formik.getFieldProps('password')}
+            value={password} // Controlled input: value is tied to state
+            onChange={handlePasswordChange} // Updates state on change
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
             placeholder="Enter your password"
             aria-required="true"
           />
-          {/* Display validation error for password */}
-          {formik.touched.password && formik.errors.password ? (
-            <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
-          ) : null}
         </div>
+
+        {/* Error Message Display */}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative" role="alert">
+            <strong className="font-bold">Error! </strong>
+            <span className="block sm:inline">{error}</span>
+          </div>
+        )}
+
+        {/* Success Message Display */}
+        {success && (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative" role="alert">
+            <strong className="font-bold">Success! </strong>
+            <span className="block sm:inline">{success}</span>
+          </div>
+        )}
 
         {/* Submit Button */}
         <button
           type="submit"
-          // Disable button while submitting
-          disabled={formik.isSubmitting}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out transform hover:scale-105"
         >
-          {formik.isSubmitting ? 'Registering...' : 'Register'}
+          Register
         </button>
       </form>
     </div>
   );
 }
+
