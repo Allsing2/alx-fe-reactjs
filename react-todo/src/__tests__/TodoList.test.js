@@ -3,7 +3,8 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import TodoList from "../components/TodoList";
 
-describe("TodoList Component", () => {
+describe("TodoList Component Tests", () => {
+  // 1. Initial render
   test("renders without crashing", () => {
     render(<TodoList />);
     expect(screen.getByText(/Todo List/i)).toBeInTheDocument();
@@ -16,10 +17,11 @@ describe("TodoList Component", () => {
     expect(screen.getByText("Write tests")).toBeInTheDocument();
   });
 
-  test("allows user to add a new todo", () => {
+  // 2. Adding Todos
+  test("adds a new todo", () => {
     render(<TodoList />);
     const input = screen.getByPlaceholderText(/Enter new todo/i);
-    const addButton = screen.getByText(/Add/i);
+    const addButton = screen.getByText("Add");
 
     fireEvent.change(input, { target: { value: "New Todo Item" } });
     fireEvent.click(addButton);
@@ -27,31 +29,30 @@ describe("TodoList Component", () => {
     expect(screen.getByText("New Todo Item")).toBeInTheDocument();
   });
 
+  // 3. Toggling Todos
   test("toggles a todo between completed and not completed", () => {
     render(<TodoList />);
     const todo = screen.getByText("Learn React");
 
-    expect(todo).not.toHaveClass("completed");
+    // Initial state
+    expect(todo).toHaveStyle("text-decoration: none");
 
+    // Toggle completed
     fireEvent.click(todo);
-    expect(todo).toHaveClass("completed");
+    expect(todo).toHaveStyle("text-decoration: line-through");
 
+    // Toggle back
     fireEvent.click(todo);
-    expect(todo).not.toHaveClass("completed");
+    expect(todo).toHaveStyle("text-decoration: none");
   });
 
-  test("deletes a todo item when delete button is clicked", () => {
+  // 4. Deleting Todos
+  test("deletes a todo item", () => {
     render(<TodoList />);
-    
-    // Ensure "Build a Todo App" exists
     const todo = screen.getByText("Build a Todo App");
-    expect(todo).toBeInTheDocument();
+    const deleteButton = screen.getAllByText("Delete")[1]; // second todo
 
-    // Find and click the corresponding delete button
-    const deleteButton = todo.nextSibling; // button is rendered next to the span
     fireEvent.click(deleteButton);
-
-    // The todo should no longer exist
     expect(screen.queryByText("Build a Todo App")).not.toBeInTheDocument();
   });
 });

@@ -1,37 +1,71 @@
 import React, { useState } from "react";
-import AddTodoForm from "./AddTodoForm";
-import TodoItem from "./TodoItem";
 
+// Single Todo item
+const TodoItem = ({ todo, toggleTodo, deleteTodo }) => (
+  <li style={{ marginBottom: "10px" }}>
+    <span
+      data-testid={`todo-${todo.id}`}
+      style={{
+        textDecoration: todo.completed ? "line-through" : "none",
+        cursor: "pointer",
+        marginRight: "10px",
+      }}
+      onClick={() => toggleTodo(todo.id)}
+    >
+      {todo.text}
+    </span>
+    <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+  </li>
+);
+
+// AddTodoForm Component
+const AddTodoForm = ({ addTodo }) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (inputValue.trim()) {
+      addTodo(inputValue.trim());
+      setInputValue("");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Enter new todo"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <button type="submit">Add</button>
+    </form>
+  );
+};
+
+// Main TodoList Component
 const TodoList = () => {
-  // Initial todos
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
     { id: 2, text: "Build a Todo App", completed: false },
     { id: 3, text: "Write tests", completed: false },
   ]);
 
-  // Add a new todo
   const addTodo = (text) => {
-    const newTodo = {
-      id: Date.now(),
-      text,
-      completed: false,
-    };
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    const newTodo = { id: Date.now(), text, completed: false };
+    setTodos([...todos, newTodo]);
   };
 
-  // Toggle todo completed status
   const toggleTodo = (id) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
+    setTodos(
+      todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
   };
 
-  // Delete a todo
   const deleteTodo = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   return (
