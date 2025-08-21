@@ -1,19 +1,10 @@
-// src/pages/Profile.jsx
-import { Outlet, Link } from "react-router-dom";
 
-function Profile() {
+function ProfileDetails() {
   return (
-    <div className="card">
-      <h2>Profile Page</h2>
-      <nav>
-        <Link to="details">Details</Link> |{" "}
-        <Link to="settings">Settings</Link>
-      </nav>
-
-      {/* Nested routes render here */}
-      <Outlet />
+    <div>
+      <h3>Profile Details</h3>
+      <p>This is the profile details page.</p>
     </div>
   );
-}
-
-export default Profile;
+}   
+export default ProfileDetails;
