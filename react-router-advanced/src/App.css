@@ -1,0 +1,60 @@
+/* src/App.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}
+
+.card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  /* prettier, layered shadow */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  /* add a subtle hover effect */
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2), 0 6px 8px rgba(0, 0, 0, 0.12);
+}
+
+.card h1 {
+  margin-bottom: 1rem;
+  color: #0077cc;
+}
+
+.card p {
+  margin-bottom: 1.5rem;
+  color: black;
+}
+
+.card nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card nav li {
+  margin: 0.5rem 0;
+}
+
+.card nav a {
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: bold;
+}
+
+.card nav a:hover {
+  color: #005fa3;
+}
