@@ -1,7 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom"; 
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import BlogPost from "./components/BlogPost";
+import ProtectedRoute from "./components/ProtectedRoute";
+import "./App.css";
 
 function App() {
   return (
@@ -10,8 +12,15 @@ function App() {
         {/* Home page */}
         <Route path="/" element={<Home />} />
 
-        {/* Profile page with nested routes handled inside Profile.jsx */}
-        <Route path="/profile/*" element={<Profile />} />
+        {/* Protected Profile page */}
+        <Route 
+          path="/profile/*" 
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } 
+        />
 
         {/* Dynamic blog post route */}
         <Route path="/blog/:id" element={<BlogPost />} />

@@ -1,48 +1,52 @@
-/* src/App.css */
-
+/* General body styling */
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: black;
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
 }
 
+/* Card styling */
 .card {
-  background: #fff;
+  background-color: #ffffff;
   padding: 2rem;
-  border-radius: 12px;
-  /* prettier, layered shadow */
+  border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  max-width: 400px;
+  max-width: 450px;
   width: 90%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Card hover effect */
 .card:hover {
-  /* add a subtle hover effect */
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2), 0 6px 8px rgba(0, 0, 0, 0.12);
 }
 
-.card h1 {
-  margin-bottom: 1rem;
+/* Headings */
+.card h1,
+.card h2 {
   color: #0077cc;
+  margin-bottom: 1rem;
 }
 
+/* Paragraphs */
 .card p {
+  color: #555;
   margin-bottom: 1.5rem;
-  color: black;
+  line-height: 1.5;
 }
 
+/* Navigation links */
 .card nav ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 1rem 0;
 }
 
 .card nav li {
@@ -52,9 +56,26 @@ body {
 .card nav a {
   text-decoration: none;
   color: #0077cc;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .card nav a:hover {
   color: #005fa3;
+}
+
+/* Buttons */
+.card button {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.card button:hover {
+  background-color: #005fa3;
+  transform: translateY(-2px);
 }
